@@ -10,18 +10,21 @@ import {
 import { Injectable } from '@angular/core';
 import { LoginData } from '../interfaces/login-data.interface';
 
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   constructor(private auth: Auth) {}
-
+ 
   login({ email, password }: LoginData) {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
   loginWithGoogle() {
-    return signInWithPopup(this.auth, new GoogleAuthProvider());
+    return signInWithPopup(this.auth, new GoogleAuthProvider().setCustomParameters({
+      prompt: "select_account"
+    }));
   }
 
   register({ email, password }: LoginData) {
